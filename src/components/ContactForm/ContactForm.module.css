@@ -1,0 +1,38 @@
+.submit {
+  border: 3px solid darkred;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.input {
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 12px 24px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.btn:hover,
+.btn:focus {
+  color: aliceblue;
+  background-color: darkred;
+}
+
+.btn span {
+  margin-right: 5px;
+}
