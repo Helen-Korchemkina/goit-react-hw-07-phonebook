@@ -7,9 +7,11 @@ export const getVisibleContacts = createSelector(
   getContacts,
   getFilter,
   (items, filter) => {
-    const normalizedFilter = filter.toLowerCase().trim();
+    if (!items) { return } else {
+      const normalizedFilter = filter.toLowerCase().trim();
     return items
       .map(item => item.name.toLowerCase().includes(normalizedFilter) && item)
-      .filter(item => item !== false);
+      .filter(item => item !== false).sort((a,b) => a.name.localeCompare(b.name));}
   }
 );
+

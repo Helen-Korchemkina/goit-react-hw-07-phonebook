@@ -1,15 +1,14 @@
 import React from 'react';
-import { addContact } from 'redux/slice';
-import { useDispatch } from 'react-redux/es/exports';
 import { FcTwoSmartphones } from 'react-icons/fc';
 import { Formik, Form, Field } from 'formik';
+import { useAddContactMutation } from 'services/api';
 import s from './ContactForm.module.css';
 
 const ContactForm = () => {
-  const dispatch = useDispatch();
+  const [addContact, {isLoading}] = useAddContactMutation();
 
   const handleSubmit = ( {name, number}, { resetForm }) => {
-    dispatch(addContact({ name, number }));
+    addContact({ name, number });
     resetForm();
   };
 
@@ -38,8 +37,9 @@ const ContactForm = () => {
             required
           />
         </label>
-        <button className={s.btn} type="submit">
-          <span>Add contact</span> <FcTwoSmartphones />
+        <button className={s.btn} type="submit"> 
+          {isLoading ? <span>Loading...</span> : <span>Add contact</span>}
+           <FcTwoSmartphones />
         </button>
       </Form>
     </Formik>
