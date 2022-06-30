@@ -2,14 +2,27 @@ import React from 'react';
 import { FcTwoSmartphones } from 'react-icons/fc';
 import { Formik, Form, Field } from 'formik';
 import { useAddContactMutation } from 'services/api';
+import { getContacts } from 'redux/selectors';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import s from './ContactForm.module.css';
 
 const ContactForm = () => {
-  const [addContact, {isLoading}] = useAddContactMutation();
+  const [addContact, { isLoading }] = useAddContactMutation();
+  const contacts = useSelector(getContacts);
 
-  const handleSubmit = ( {name, number}, { resetForm }) => {
-    addContact({ name, number });
-    resetForm();
+  const handleSubmit = ({ name, number }, { resetForm }) => {
+    const isContact = contacts?.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (isContact) {
+      toast.error(`${name} is already in contact`);
+      return;
+    } else {
+      addContact({ name, number });
+      toast.success(`Сontact with ${name} added`);
+      resetForm();
+    }
   };
 
   return (
@@ -37,9 +50,9 @@ const ContactForm = () => {
             required
           />
         </label>
-        <button className={s.btn} type="submit"> 
+        <button className={s.btn} type="submit">
           {isLoading ? <span>Loading...</span> : <span>Add contact</span>}
-           <FcTwoSmartphones />
+          <FcTwoSmartphones />
         </button>
       </Form>
     </Formik>

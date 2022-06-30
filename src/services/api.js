@@ -22,10 +22,10 @@ export const contactsApi = createApi({
       query: newContact => ({
         url: `contacts`,
         method: 'POST',
-        body: newContact = {
+        body: (newContact = {
           name: newContact.name,
           phone: newContact.number,
-        },
+        }),
       }),
       invalidatesTags: ['Contact'],
     }),
